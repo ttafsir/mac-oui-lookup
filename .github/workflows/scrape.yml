@@ -1,4 +1,4 @@
-name: download and parse IEEE OUI data
+name: scrape IEEE OUI data
 
 on:
   push:
