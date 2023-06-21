@@ -1,0 +1,32 @@
+name: download and parse IEEE OUI data
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: "31 0 * * *" # 12:31 AM UTC, once a day
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.9"
+
+      - name: Run script
+        run: python download_and_parse.py
+
+      - name: Commit and push if it changed
+        run: |-
+          git config user.name "Automated"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          timestamp=$(date -u)
+          git commit -m "Latest IEEE OUI data: ${timestamp}" || exit 0
+          git push
