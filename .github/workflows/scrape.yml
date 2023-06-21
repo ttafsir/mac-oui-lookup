@@ -20,7 +20,7 @@ jobs:
           python-version: "3.9"
 
       - name: Run script
-        run: python download_and_parse.py
+        run: python download_and_parse_oui.py
 
       - name: Commit and push if it changed
         run: |-
